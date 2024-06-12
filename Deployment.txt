@@ -1,0 +1,26 @@
+Deployment Steps:
+
+Create RDS PostgreSQL Instance: Set up an RDS instance with appropriate size and configuration.
+Create Elastic Beanstalk Environment: Create an Elastic Beanstalk environment, choosing Python as your platform. Upload your application code, either as a ZIP file or within a Docker container.
+Configure API Gateway (Optional): If you choose to use API Gateway, create a new API, link it to your Elastic Beanstalk environment, and configure routes, authorization, etc.
+Create Lambda Function: Create a Lambda function, selecting Python as the runtime. Upload your Python data ingestion script and install any necessary dependencies (e.g., psycopg2-binary, etc.).
+Create EventBridge Rule: Create a scheduled rule in EventBridge to trigger your Lambda function on a schedule.
+Store Data in S3: Upload your raw weather data files to an S3 bucket.
+Configure Secrets Manager: Store your database credentials securely in Secrets Manager and give your Lambda function and API permission to access them.
+Set Up CloudWatch: Configure logging and alerting for your resources.
+
+
+High-Level Architecture Diagram:
+
+     User
+        |
+    API Gateway (Optional)
+        |
+Elastic Beanstalk (FastAPI App)
+        |
+   RDS PostgreSQL
+        ^
+        |
+    Lambda Function (Data Ingestion)
+        |
+       S3 (Raw Data)
